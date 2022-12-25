@@ -17,6 +17,7 @@ load_dotenv()
 machines = {}
 app = Flask(__name__, static_url_path="")
 
+
 #Database Init
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', '7f6g7t6sadwerFjlskdfjlskadflksjf')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -108,7 +109,7 @@ userText_to_trigger = {
     "log in": "login",
     "返回":"go_back",
     "返回主頁面": "back_to_menu",
-    # "fsm":"fsm_query",
+    "fsm":"fsm_query",
     "test":"test_query",
     "是": "yes",
     "否": "no"
@@ -119,6 +120,11 @@ userText_to_trigger = {
 @app.route('/graphs/<path:path>')
 def graph(path):
     return send_from_directory('graphs',path)
+
+@app.route("/show-fsm", methods=["GET"])
+def show_fsm():
+    machine.get_graph().draw("fsm.png", prog="dot", format="png")
+    return send_file("fsm.png", mimetype="image/png")
 
 @app.route('/',methods=['POST'])
 def recieve():
@@ -298,36 +304,7 @@ def populateDB_scratch():
         price = 120,
         quantity = 0
     ))
-    # Main_Dish.append(MainDish(
-    #     name = "Braised Pork Rice",
-    #     picture = 'https://cdn-cw-english.cwg.tw/article/201806/article-5b29d5678b775.jpg',
-    #     price = 140,
-    #     quantity = 0
-    # ))
-    # Main_Dish.append(MainDish(
-    #     name = "Pig Bood Cake",
-    #     picture = 'https://cdn01.pinkoi.com/product/J4V68Ue6/0/640x530.jpg',
-    #     price = 60,
-    #     quantity = 0
-    # ))
-    # Main_Dish.append(MainDish(
-    #     name = "Spring Onion Pancake",
-    #     picture = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Spring_onion_pancake_2013.JPG/800px-Spring_onion_pancake_2013.JPG',
-    #     price = 80,
-    #     quantity = 0
-    # ))
-    # Main_Dish.append(MainDish(
-    #     name = "Meat Ball Soup",
-    #     picture = 'https://lh3.googleusercontent.com/proxy/wKELhsosG2iLPaZJN_myDyKEN0TGJ26sQuj7lGl2x_E4IlXtpyDfE0dPNyRkO5ua0PpPf5V8ZE1vJLFftGnfHTL7V0A',
-    #     price = 40,
-    #     quantity = 0
-    # ))
-    # Main_Dish.append(MainDish(
-    #     name = "Rice Noodle",
-    #     picture = 'https://runawayrice.com/wp-content/uploads/2018/11/Rice-Noodle-Rice-Vermicelli-Bun-Tuoi.jpg',
-    #     price = 70,
-    #     quantity = 0
-    # ))
+    
 
     for drink in Drinks:
         db.session.add(drink)
@@ -336,85 +313,6 @@ def populateDB_scratch():
     for food in Main_Dish:
         db.session.add(food)
     db.session.commit()
-
-
-# get channel_secret and channel_access_token from your environment variable
-# channel_secret = os.getenv("LINE_CHANNEL_SECRET", None)
-# channel_access_token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", None)
-# if channel_secret is None:
-#     print("Specify LINE_CHANNEL_SECRET as environment variable.")
-#     sys.exit(1)
-# if channel_access_token is None:
-#     print("Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.")
-#     sys.exit(1)
-
-# line_bot_api = LineBotApi(channel_access_token)
-# parser = WebhookParser(channel_secret)
-
-
-
-
-# @app.route("/callback", methods=["POST"])
-# def callback():
-#     signature = request.headers["X-Line-Signature"]
-#     # get request body as text
-#     body = request.get_data(as_text=True)
-#     app.logger.info("Request body: " + body)
-
-#     # parse webhook body
-#     try:
-#         events = parser.parse(body, signature)
-#     except InvalidSignatureError:
-#         abort(400)
-
-#     # if event is MessageEvent and message is TextMessage, then echo text
-#     for event in events:
-#         if not isinstance(event, MessageEvent):
-#             continue
-#         if not isinstance(event.message, TextMessage):
-#             continue
-
-#         line_bot_api.reply_message(
-#             event.reply_token, TextSendMessage(text=event.message.text)
-#         )
-
-#     return "OK"
-
-
-# @app.route("/webhook", methods=["POST"])
-# def webhook_handler():
-#     signature = request.headers["X-Line-Signature"]
-#     # get request body as text
-#     body = request.get_data(as_text=True)
-#     app.logger.info(f"Request body: {body}")
-
-#     # parse webhook body
-#     try:
-#         events = parser.parse(body, signature)
-#     except InvalidSignatureError:
-#         abort(400)
-
-#     # if event is MessageEvent and message is TextMessage, then echo text
-#     for event in events:
-#         if not isinstance(event, MessageEvent):
-#             continue
-#         if not isinstance(event.message, TextMessage):
-#             continue
-#         if not isinstance(event.message.text, str):
-#             continue
-#         print(f"\nFSM STATE: {machine.state}")
-#         print(f"REQUEST BODY: \n{body}")
-#         response = machine.advance(event)
-#         if response == False:
-#             send_text_message(event.reply_token, "Not Entering any State")
-
-#     return "OK"
-
-
-# @app.route("/show-fsm", methods=["GET"])
-# def show_fsm():
-#     machine.get_graph().draw("fsm.png", prog="dot", format="png")
-#     return send_file("fsm.png", mimetype="image/png")
 
 
 if __name__ == "__main__":

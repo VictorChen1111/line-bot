@@ -7,7 +7,9 @@ from utils import LineAPI
 import random
 
 
-FSM_GRAPH_URL = 'https://toc.c.gtco.team/graphs/fsm.png'
+
+FSM_GRAPH_URL = 'https://img.onl/lYRVQn'
+
 class FSMchatbot(object):
     fsmDefinition = {
         "states":  [
@@ -366,7 +368,7 @@ class FSMchatbot(object):
 
     #Send Response to the Client
         LineAPI.send_reply_message(reply_token,
-                                f"----------完成點餐-----------\n"+
+                                f"-------完成點餐--------\n"+
                                 f"點餐時間 {datetime.utcnow().strftime('%B %d %Y - %H:%M:%S')}\n"+
                                 f"姓名: {self.userName}\n"+
                                 f"電話:{self.phoneNumber}\n"+
@@ -380,42 +382,6 @@ class FSMchatbot(object):
 
 
 
-
-
-    # def on_enter_main(self,reply_token):
-
-
-    
-    # def __init__(self, **machine_configs):
-    #     self.machine = GraphMachine(model=self, **machine_configs)
-
-    # def is_going_to_state1(self, event):
-    #     text = event.message.text
-    #     return text.lower() == "go to state1"
-
-    # def is_going_to_state2(self, event):
-    #     text = event.message.text
-    #     return text.lower() == "go to state2"
-
-    # def on_enter_state1(self, event):
-    #     print("I'm entering state1")
-
-    #     reply_token = event.reply_token
-    #     send_text_message(reply_token, "Trigger state1")
-    #     self.go_back()
-
-    # def on_exit_state1(self):
-    #     print("Leaving state1")
-
-    # def on_enter_state2(self, event):
-    #     print("I'm entering state2")
-
-    #     reply_token = event.reply_token
-    #     send_text_message(reply_token, "Trigger state2")
-    #     self.go_back()
-
-    # def on_exit_state2(self):
-    #     print("Leaving state2")
 
 if __name__ == '__main__':
     mach = FSMchatbot()
