@@ -28,7 +28,7 @@ class FSMchatbot(object):
             'not_user', 
             'order_show',
             'all_orders',
-            'test'
+            # 'test'
         ],
 
         "transitions":[
@@ -37,11 +37,11 @@ class FSMchatbot(object):
                 'source':'main',
                 'dest':'menu'
             },
-            {
-                'trigger': 'test_query',
-                'source':'*',
-                'dest':'test'
-            },
+            # {
+            #     'trigger': 'test_query',
+            #     'source':'*',
+            #     'dest':'test'
+            # },
             {
                 'trigger': 'drink_query',
                 'source':'menu',
@@ -90,6 +90,11 @@ class FSMchatbot(object):
             {
                 'trigger': 'back_to_menu',
                 'source':'order_show',
+                'dest': 'menu'  
+            },
+            {
+                'trigger': 'back_to_menu',
+                'source':'main_dishes',
                 'dest': 'menu'  
             },
             {
@@ -241,9 +246,8 @@ class FSMchatbot(object):
         # print(elements)
         LineAPI.sendCarousel(reply_token, elements) 
         quick_reply = LineAPI.makeQuickReplyText([
-            # 'More Food',
             '確認',
-            '主頁面'
+            '返回菜單'
             
         ])
         # if self.repeatedDish == True:
@@ -281,10 +285,7 @@ class FSMchatbot(object):
             '確認',
             '主頁面'
         ])
-        # if self.repeatedDrink == True:
-        #     LineAPI.send_reply_message(reply_token,reply_msg="Sorry right now only can order \n " +
-        #                                 "one main drink per order\n"+
-        #                                 "If you want to change order you have to go back to main")
+  
         LineAPI.send_reply_message(
             reply_token, reply_msg="點完請按「確認」", quickReply=quick_reply)
         LineAPI.commitMessage()
@@ -306,7 +307,7 @@ class FSMchatbot(object):
             LineAPI.send_reply_message(reply_token,
                                         "抱歉您尚未點餐歐",
                                         LineAPI.makeQuickReplyText([
-                                            '主頁面'
+                                            '返回菜單'
                                         ])
                                         )
             LineAPI.commitMessage()
@@ -321,10 +322,10 @@ class FSMchatbot(object):
         )
         LineAPI.commitMessage()
 
-    def on_enter_get_phone(self,reply_token,invalid:bool = False):
+    def on_enter_get_phone(self,reply_token, invalid:bool = False):
         if invalid:
             LineAPI.send_reply_message(
-                reply_token, "Please insert a valid Phone Number"
+                reply_token, "請輸入正確資料"
             )
         else:
             LineAPI.send_reply_message(

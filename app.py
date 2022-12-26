@@ -98,7 +98,7 @@ def transitionState (reply_token, user_id, text):
 userText_to_trigger = {
     "主頁面":"main",
     "開始點餐":"menu_query",
-    "取消": "main",
+    "取消": "menu",
     "主餐": "main_query",
     "飲品": "drink_query",
     # "more food":"re_sample",
@@ -106,9 +106,9 @@ userText_to_trigger = {
     # "查看更多飲品":"re_sample",
     "已點品項":"order_show_query",
     "結帳": "set_query",
-    "log in": "login",
+    "登入": "login",
     "返回":"go_back",
-    "返回主頁面": "back_to_menu",
+    "返回菜單": "back_to_menu",
     "fsm":"fsm_query",
     "test":"test_query",
     "是": "yes",
@@ -148,7 +148,7 @@ def recieve():
         machines[user_id].repeatedDrink= False
 
     if machines[user_id].state == 'set_order':
-        if message != 'Log In':
+        if message != 'Log In' and message != '登入':
             machines[user_id].userName = message
             message = 'name'
 
@@ -203,6 +203,7 @@ def recieve():
         if  message.isnumeric():
             current_user = User.query.filter(User.phone == message).first()
             if current_user:
+                print(f"\n>>{current_user.name}\n")
                 machines[user_id].userName = current_user.name
                 machines[user_id].phoneNumber = message
                 message = 'success'
