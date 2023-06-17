@@ -30,12 +30,12 @@ Navigation menus built with carousels and buttons for easier navigation
 - Give an order
 - History for customer
 
-![easy_to_use](./img/easy_to_use.png) {:width="150px"}
-![done_order](./img/done_order.jpg) {:width="150px"}
+![easy_to_use](./img/easy_to_use.png){:width="150px"}
+![done_order](./img/done_order.jpg){:width="150px"}
 
 
 
 ## FSM Graph
 The Finite State Machine graph looks as it follows:
 
-![fsm](fsm.png) {:width="150px"}
+![fsm](fsm.png){:width="150px"}
