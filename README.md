@@ -30,8 +30,8 @@ Navigation menus built with carousels and buttons for easier navigation
 - Give an order
 - History for customer
 
-![easy_to_use](./img/easy_to_use.png)
-![done_order](./img/done_order.jpg)
+![easy_to_use](./img/easy_to_use.png){:width="300px"}
+![done_order](./img/done_order.jpg){:width="300px"}
 
 
 
